@@ -1,0 +1,16 @@
+@CHARSET "UTF-8";
+
+#detail div{
+	border: solid #808000;
+	border-radius: 10px;
+	margin-bottom:10px;
+}
+#detail p{
+	margin-left:3%;
+	margin-right:3%;
+
+}
+
+.logo{
+	height:40px;
+}

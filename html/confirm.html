@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>登録情報確認</title>
+<meta http-equiv="content-style-type" content="text/css">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="stylesheet" href="../css/base.css" type="text/css" media="screen">
+<link rel="stylesheet" href="../css/confirm.css" type="text/css" media="screen">
+<script type="text/javascript" src="../javascript/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="../javascript/confirm.js"></script>
+<script type="text/javascript" src="../javascript/session_ready.js"></script>
+</head>
+<body>
+	<div id="main">
+	<h1>登録情報確認</h1>
+		<form>
+			<div id="birth">
+				<p>
+					<label>生年月日</label>
+					<?php
+						echo '<select id="birthY" class="c_register">';
+						for($i=1937; $i<=2017; $i++){
+							if($i==1989){
+								echo '<option value="'.$i.'" selected>'.$i;
+							}else{
+								echo '<option value="'.$i.'">'.$i;
+							}
+						}
+						echo '</select>';
+
+						echo '<select id="birthM" class="c_register">';
+						for($i=1; $i<=12; $i++){
+							echo '<option value="'.$i.'">'.$i;
+						}
+						echo '</select>';
+
+						echo '<select id="birthD" class="c_register">';
+						for($i=1; $i<=31; $i++){
+							echo '<option value="'.$i.'">'.$i;
+						}
+						echo '</select>';
+					?>
+				</p>
+			</div>
+			<div id="match_select">
+				<p>
+					<input type="radio" name="num_name" value="0" checked>登録名
+					<input type="radio" name="num_name" value="1">登録番号
+				</p>
+				<p>
+					<input type="text" id="match" class="long_form">
+				</p>
+			</div>
+		</form>
+		<div>
+			<button id="send" value="send">送信</button>
+		</div>
+		<div id="matching_word">
+			<!-- ここにマッチング失敗時のエラーを表示 -->
+		</div>
+		<div id = "transition">
+		<a href="./index.html">トップへ戻る</a>
+	</div>
+	</div>
+
+	<div id ="footer">
+	<p>
+		サーバルケーキパーティは、けものフレンズの非公式イベントです。<br>
+		公式けものフレンズプロジェクトとは一切関係ございません。<br>
+		ご質問などは<a href="./QA.html">こちら</a>からお願いいたします。
+	</p>
+	</div>
+</body>
+</html>

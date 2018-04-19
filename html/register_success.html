@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<?php
+	if(!empty($_GET["JOINNER_NUMBER"])){
+		$number = $_GET["JOINNER_NUMBER"];
+	}
+
+?>
+
+<meta charset="UTF-8">
+<title>サーバルケーキパーティ</title>
+<meta http-equiv="content-style-type" content="text/css">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="stylesheet" href="../css/base.css" type="text/css" media="screen">
+<script type="text/javascript" src="../javascript/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="../javascript/success.js"></script>
+<script type="text/javascript" src="../javascript/storager.js"></script>
+</head>
+<body>
+<h1>サーバルケーキパーティ！参加登録完了</h1>
+<img src = "./img/top.jpg">
+	<div id="main">
+		<div>
+			<p>【登録番号】
+			<?php
+				echo $number;
+		?>
+			</p>
+			<p>参加登録が完了いたしました。</p>
+			<p>選択されたアカウント、またはメールアドレスに確認を送付いたしました。
+			<p>10分待たれても届かない場合は、「@wolfnet-twei.sakura.ne.jp」が受信できる設定になっていることをご確認ください。</p>
+			<p>設定されても届かない場合、アカウントならびに、メールアドレスが間違っている可能性がございます。</p>
+			<p><a href="./QA.html" target="_blank">こちら</a>から連絡をいただけますようお願いいたします。<br></p>
+			<p>
+				一両日中に登録のお返事をお送りいたしますが、万一三日以上連絡が届かない場合、<a href="./QA.html" target="_blank">こちら</a>から連絡をいただけますようお願いいたします。
+			<br></p>
+			<p>
+				また登録情報につきましては、<a href = "./confirm.html" target="_blank">こちら</a>で登録名と登録IDをご入力いただくことでもご確認いただけます。<br>
+			</p>
+			<p>
+				それでは、連絡まで今しばらくお待ちください。<br>
+			</p>
+
+			<p>サーバルケーキパーティ主催:luza</p>
+		</div>
+	<div id = "transition">
+		<a href="./index.html">トップへ戻る</a>
+	</div>
+</div>
+
+<div id ="footer">
+	<p>
+		サーバルケーキパーティは、けものフレンズの非公式イベントです。<br>
+		公式けものフレンズプロジェクトとは一切関係ございません。<br>
+		ご質問などは<a href="./QA.html">こちら</a>からお願いいたします。
+	</p>
+</div>
+
+</body>

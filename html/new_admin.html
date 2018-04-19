@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>サーバルケーキパーティ</title>
+<meta http-equiv="content-style-type" content="text/css">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="stylesheet" href="../css/base.css" type="text/css" media="screen">
+<script type="text/javascript" src="../javascript/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="../javascript/new_admin.js"></script>
+<script type="text/javascript" src="../javascript/session_ready.js"></script>
+</head>
+<body>
+<h1>管理者ログイン</h1>
+
+	<div id="main">
+		<form>
+			<div>
+				<p>
+					<label>ユーザー名</label>
+					<input id="user" type="text" class="long_form">
+				</p>
+			</div>
+			<div>
+				<p>
+					<label>パスワード</label>
+					<input type="text" id="passwd" class="long_form"  type='password'>
+				</p>
+			</div>
+			<div>
+				<p>
+					<label>パスワード確認</label>
+					<input type="text" id="passwd_check" class="long_form"  type='password'>
+				</p>
+			</div>
+			<div>
+				<p>
+					<label>メールアドレス登録</label>
+					<input type="text" id="mail" class="long_form"  pattern="^[0-9A-Za-z_]+$">
+				</p>
+			</div>
+		</form>
+		<div id="make_word">
+			<!-- ここに登録失敗時のエラーを表示 -->
+		</div>
+		<button type="button" id="make" value="make">作成</button>
+	</div>
+</body>

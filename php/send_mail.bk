@@ -1,0 +1,114 @@
+<?php
+require 'twitteroauth/autoload.php';
+use Abraham\TwitterOAuth\TwitterOAuth;
+
+//言語コード設定
+mb_internal_encoding("UTF-8");
+mb_language("japanese");
+
+//送信元情報
+$from_name = "サーバルケーキパーティ企画部";
+$from_add = $account["info_add"];
+$from_name_enc = mb_encode_mimeheader($from_name, "ISO-2022-JP");
+$from = "$from_name_enc<$from_addr>";
+
+//ヘッダ情報登録
+$header .= "Content-Type: text/plain \r\n";
+$header .= "Return-Path: " . $account["info_add"] . "  \r\n";
+$header = "From:" . $from . "\r\n";
+$header .= "Sender: " . $from_name ."  \r\n";
+$header .= "Reply-To: " . $from . " \r\n";
+$header .= "Organization: " . $from_name . " \r\n";
+$header .= "X-Sender: " . $account["info_add"] . " \r\n";
+$header .= "X-Priority: 3 \r\n";
+//$header .= "X-Miler: PHP/".phpversion();
+
+
+
+if(!empty($_POST["register"])){
+	$register = $_POST["register"];
+
+	//ファイル読み込み処理
+	//アドレスはカンマ区切りのプロパティとして取得、配列にする
+	$account = parse_ini_file("./property.ini");
+
+	//エラーメール送信先設定
+	$return = "-f" . $account["own_add"];
+
+	//自メールアドレス取得処理
+
+	if(intval($register["REGISTER_CODE"])== 1 ){
+
+		$consumer_key = "US1wRncfyzig9e3oF1KnK7WNG";
+		$consumer_key_secret = "VXovfMbNcXkb0gZNP84EsOWITy45jN130padwVIHn3PvP0GRpP";
+		$access_token ="918282399724707840-yzvE7PGgnNeQdZ3kui1NlrnBkhRck5f";
+		$access_token_sequret = "tPM6OVfsW9LlT3V60V0wq5BYo4IJCRm1Jlgw2ku6mfSfK";
+
+		$url = "statuses/update";
+
+		$notes = "@" . $register["ADDRESS"]." 【受付番号】".$register["JOINNER_NUMBER"]."\n申込を受け付けました。
+				申込情報を確認の上、一両日中にご連絡いたします。
+				万一三日以上連絡がない場合、お手数ですが、https://wolfnet-twei.sakura.ne.jp/party/html/QA.htmlよりお問合せください。";
+
+
+		//オブジェクトを生成
+		$obj = new TwitterOAuth($consumer_key,$consumer_key_secret,$access_token,$access_token_sequret);
+
+		$twResult = $obj->post($url,array("status" => $notes));
+
+		$result = json_decode($twResult);
+
+		if(isset($result->{'errors'}) && $result->{'errors'} != ''){
+			//エラーメール送信処理
+			mb_send_mail($account["inquiry_add"],"ツイートに失敗しました",$header,$return);
+			echo 0;
+		}
+
+	}elseif(intval($register["REGISTER_CODE"])== 0 ){
+		//本文を設定
+		$str = $register["JOINNER_NAME"] . "様\n\n";
+		$str .= "【登録番号】" . $register["JOINNER_NUMBER"] . "\n";
+		$str .= "このたびは、非公式イベント『サーバルケーキパーティ』への参加登録、まことにありがとうございます。\n";
+		$str .= "内容確認後、主催より一両日中に折り返しご連絡をさせていただきますので、今しばらくお待ちください。\n";
+		$str .= "万一三日以上ご連絡がない場合、大変お手数ですが、以下のフォームよりご連絡ください\n";
+		$str .= "https://wolfnet-twei.sakura.ne.jp/party/html/QA.html\n\n";
+
+		$str .= "-------------------------------------------------------------\n";
+		$str .= "■登録情報の確認\n";
+		$str .= "\n\n";
+
+		$str .= "■お問い合わせ\n";
+		$str .= "https://wolfnet-twei.sakura.ne.jp/party/html/QA.html\n\n";
+
+		$str .= "-------------------------------------------------------------\n\n";
+		$str .= "このメールにお心当たりの無い方は、お手数ですが当メールを破棄していただきますようお願い申し上げます\n\n";
+
+		$str .= "※このメールは送信専用のメールアドレスから配信されています。\n";
+		$str .= "ご返信いただいてもお返事できませんのでご了承ください。\n\n";
+
+		$str .= "---------------------------------\n";
+
+		$str .= "サーバルケーキパーティ企画部\n\n";
+
+		$str .= "主催：luza\n\n";
+
+		$str .= "https://wolfnet-twei.sakura.ne.jp/party/html\n";
+
+		$str .= "---------------------------------\n";
+
+
+
+		//メール送信処理
+		mb_send_mail($register["ADDRESS"],"サーバルケーキパーティ　申込受付",$str,$header,$return);
+	}
+
+	//自分に登録通知メール送信
+	mb_send_mail($account["inquiry_add"],"サーバルケーキパーティ　申込受領","パーティ申し込みがありました\n".$register["JOINNER_NUMBER"],$header,$return);
+
+	echo 1;
+}else{
+	echo 0;
+}
+
+
+?>

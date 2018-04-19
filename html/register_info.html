@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<?php
+	if(!empty($_GET["input"])){
+		$input_url = urldecode(urldecode($_GET["input"]));
+		$input = json_decode($input_url,true);
+	}else{
+		echo 0;
+	}
+?>
+<head>
+<meta charset="UTF-8">
+<title>サーバルケーキパーティ</title>
+<meta http-equiv="content-style-type" content="text/css">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="stylesheet" href="../css/base.css" type="text/css" media="screen">
+<link rel="stylesheet" href="../css/table_conf.css" type="text/css" media="screen">
+<script type="text/javascript" src="../javascript/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="../javascript/session_ready.js"></script>
+<script type="text/javascript" src="../javascript/register_info.js"></script>
+<script type="text/javascript" src="../javascript/storager.js"></script>
+</head>
+<body>
+<h1>サーバルケーキパーティ！登録情報確認</h1>
+<img src = "../img/top.jpg">
+<div id="main">
+	<div>
+		<?php
+			require_once("../php/conection.php");
+			$mysqli = db_connect("wolfnet-twei_party");
+
+			$mysqli->set_charset("utf-8");
+				if(!$input["match_select"]){
+				$stmt = $mysqli -> prepare("SELECT * FROM REGISTER WHERE BIRTH = ? AND JOINNER_NAME = ?");
+			}else{
+				$stmt = $mysqli -> prepare("SELECT * FROM REGISTER WHERE BIRTH = ? AND JOINNER_NUMBER = ?");
+			}
+
+			$stmt->bind_param('is', $input["birth"], $input["match"]);
+
+			$stmt->execute();
+
+			//結果を格納
+			$result = $stmt->get_result();
+
+			while($row = $result -> fetch_assoc()){
+				//メイン
+				echo "<div id = 'main_confirm'>\n";
+				echo "<table>\n";
+				//参加者名
+				echo "<tr>\n";
+				echo "<td id='left_pain'>\n";
+				echo "<p>参加者名</p>\n";
+				echo "</td>\n";
+				echo "<td>\n";
+				echo "<p>\n";
+				echo $row["JOINNER_NAME"] ."\n";
+				echo "</p>\n";
+				echo "</td>\n";
+				echo "</tr>\n";
+
+				//生年月日
+				echo "<tr>\n";
+				echo "<td id='left_pain'>\n";
+				echo "<p>参加者名</p>\n";
+				echo "</td>\n";
+				echo "<td>\n";
+				echo "<p>\n";
+				echo substr($row["BIRTH"],0,4) ."年" . substr($row["BIRTH"],4,2) ."月".substr($row["BIRTH"],6,2) ."\n";
+				echo "</p>\n";
+				echo "</td>\n";
+				echo "</tr>\n";
+
+				//参加費
+				echo "<tr>\n";
+				echo "<td id='left_pain'>\n";
+				echo "<p>参加費</p>\n";
+				echo "</td>\n";
+				echo "<td>\n";
+				echo "<p>\n";
+				echo $row["PRICE"] ."円\n";
+				echo "</p>\n";
+				echo "</td>\n";
+				echo "</tr>\n";
+
+				//参加費
+				echo "<tr>\n";
+				echo "<td id='left_pain'>\n";
+				echo "<p>参加費</p>\n";
+				echo "</td>\n";
+				echo "<td>\n";
+				echo "<p>\n";
+				if($row["STATUS"] == "0"){
+					echo "申し込み受付済み(審査中)";
+				}else if($row["STATUS"] == "1"){
+					echo "申し込み登録完了";
+				}else if($row["STATUS"] == "9"){
+					echo "申し込みキャンセル";
+				}
+				echo "</p>\n";
+				echo "</td>\n";
+				echo "</tr>\n";
+
+				//連絡方法
+				echo "<tr>\n";
+				echo "<td id='left_pain'>\n";
+				echo "<p>連絡方法</p>\n";
+				echo "</td>\n";
+				echo "<td>\n";
+				echo "<p>\n";
+				switch($row["REGISTER_CODE"]){
+					case 0:
+						echo "メール";
+						break;
+					case 1:
+						echo "ツイッター";
+						break;
+					case 2:
+						echo "友人";
+						break;
+				}
+				echo "</p>\n";
+				echo "</td>\n";
+				echo "</tr>\n";
+
+				//連絡先
+				echo "<tr>\n";
+				echo "<td id='left_pain'>\n";
+				echo "<p>連絡先</p>\n";
+				echo "</td>\n";
+				echo "<td>\n";
+				echo "<p>\n";
+				switch($row["REGISTER_CODE"]){
+					case 0:
+						echo $row["MAIL_ADDRESS"];
+						break;
+					case 1:
+						echo $row["TWITTER_ACOUNT"];
+						break;
+					case 2:
+						echo $row["FRIENDS_ID"];
+						break;
+				}
+
+				echo "</p>\n";
+				echo "</td>\n";
+				echo "</tr>\n";
+
+				//アクリルスタンド申込
+				echo "<tr>\n";
+				echo "<td id='left_pain'>\n";
+				echo "<p>アクリルスタンド申込</p>\n";
+				echo "</td>\n";
+				echo "<td>\n";
+				echo "<p>\n";
+				if($row["ACRYLIC_FLAG"]){
+					echo "申し込み有";
+				}else{
+					echo "申し込み無";
+				}
+				echo "</p>\n";
+				echo "</td>\n";
+				echo "</tr>\n";
+
+				//展示グッズ持込数
+				echo "<tr>\n";
+				echo "<td id='left_pain'>\n";
+				echo "<p>展示グッズ持込数</p>\n";
+				echo "</td>\n";
+				echo "<td>\n";
+				echo "<p>\n";
+				echo strval($row["DISPLAY_NUM"])."個";
+				echo "</p>\n";
+				echo "</td>\n";
+				echo "</tr>\n";
+
+				//景品持込数
+				echo "<tr>\n";
+				echo "<td id='left_pain'>\n";
+				echo "<p>景品持込数</p>\n";
+				echo "</td>\n";
+				echo "<td>\n";
+				echo "<p>\n";
+				echo strval($row["PRISE_NUM"])."個";
+				echo "</p>\n";
+				echo "</td>\n";
+				echo "</tr>\n";
+
+				//アルコール持込数
+				echo "<tr>\n";
+				echo "<td id='left_pain'>\n";
+				echo "<p>アルコール持込数</p>\n";
+				echo "</td>\n";
+				echo "<td>\n";
+				echo "<p>\n";
+				echo strval($row["ALCHOL_NUM"])."個";
+				echo "</p>\n";
+				echo "</td>\n";
+				echo "</tr>\n";
+
+				//コスプレ
+				echo "<tr>\n";
+				echo "<td id='left_pain'>\n";
+				echo "<p>コスプレ</p>\n";
+				echo "</td>\n";
+				echo "<td>\n";
+				echo "<p>\n";
+				if($row["COSTUME_FLAG"]){
+					echo "する";
+				}else{
+					echo "しない";
+				}
+				echo "</p>\n";
+				echo "</td>\n";
+				echo "</tr>\n";
+
+				//好きなフレンズ
+				echo "<tr>\n";
+				echo "<td id='left_pain'>\n";
+				echo "<p>好きなフレンズ</p>\n";
+				echo "</td>\n";
+				echo "<td>\n";
+				echo "<p>\n";
+				echo $row["LOVE_FRIENDS"];
+				echo "</p>\n";
+				echo "</td>\n";
+				echo "</tr>\n";
+
+				//その他
+				echo "<tr>\n";
+				echo "<td id='left_pain'>\n";
+				echo "<p>その他コメント</p>\n";
+				echo "</td>\n";
+				echo "<td>\n";
+				echo "<p>\n";
+				echo $row["COMMENT"];
+				echo "</p>\n";
+				echo "</td>\n";
+				echo "</tr>\n";
+			}
+		?>
+
+		<div id="button_set">
+			<button id="OK" value="OK">OK</button>
+			<button id="print" value="print">印刷</button>
+		</div>
+	</div>
+	<div id = "transition">
+		<a href="./index.html">トップへ戻る</a>
+	</div>
+</div>
+
+<div id ="footer">
+	<p>
+		サーバルケーキパーティは、けものフレンズの非公式イベントです。<br>
+		公式けものフレンズプロジェクトとは一切関係ございません。<br>
+		ご質問などは<a href="./QA.html">こちら</a>からお願いいたします。
+	</p>
+</div>
+
+</body>

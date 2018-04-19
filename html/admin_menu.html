@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>管理者ページ</title>
+<meta http-equiv="content-style-type" content="text/css">
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="../css/base.css" type="text/css" media="screen">
+<link rel="stylesheet" href="../css/confirm.css" type="text/css" media="screen">
+<link rel="stylesheet" href="../css/table_conf.css" type="text/css" media="screen">
+<script type="text/javascript" src="../javascript/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="../javascript/admin_login.js"></script>
+<script type="text/javascript" src="../javascript/css_control.js"></script>
+<script type="text/javascript" src="../javascript/session_ready.js"></script>
+</head>
+<body>
+	<?php
+	require_once("../php/conection.php");
+	$mysqli = db_connect("wolfnet-twei_party");
+
+	$result = $mysqli -> query("SELECT * FROM REGISTER");
+
+	echo "<table>\n";
+	echo "<tr>\n";
+
+	echo "<td>参加者名</td>\n";
+	echo "<td>登録番号</td>\n";
+	echo "<td>登録コード</td>\n";
+	echo "<td>友人ID</td>\n";
+	echo "<td>ツイッターアカウント有無</td>\n";
+	echo "<td>ツイッターアカウント</td>\n";
+	echo "<td>メールアドレス有無</td>\n";
+	echo "<td>メールアドレス</td>\n";
+	echo "<td>優先連絡先</td>\n";
+	echo "<td>登録日</td>\n";
+	echo "<td>生年月日</td>\n";
+	echo "<td>未成年フラグ</td>\n";
+	echo "<td>参加費</td>\n";
+	echo "<td>アクリルスタンド</td>\n";
+	echo "<td>ディスプレイ有無</td>\n";
+	echo "<td>ディスプレイ数</td>\n";
+	echo "<td>景品有無</td>\n";
+	echo "<td>景品数</td>\n";
+	echo "<td>アルコール有無</td>\n";
+	echo "<td>アルコール数</td>\n";
+	echo "<td>好きなフレンズ</td>\n";
+	echo "<td>コスプレ有無</td>\n";
+	echo "<td>コメント</td>\n";
+	echo "<td>管理者コード</td>\n";
+	echo "<td>ステータス</td>\n";
+	echo "</tr>\n";
+
+	while ($row = mysqli_fetch_assoc($result)) {
+		echo "<tr>";
+		echo "<td>" . $row["JOINNER_NAME"] . "</td>\n";
+		echo "<td>" . $row["JOINNER_NUMBER"] . "</td>\n";
+		echo "<td>" . $row["REGISTER_CODE"] . "</td>\n";
+		echo "<td>" . $row["FRIENDS_ID"] . "</td>\n";
+		echo "<td>";
+		if($row["TWITTER_ACOUNT_FLAG"]){
+			echo "あり\n";
+		}else{
+			echo "なし\n";
+		}
+		echo "</td>";
+		echo "<td>" . $row["TWITTER_ACOUNT"] . "</td>\n";
+		echo "<td>";
+		if($row["MAIL_ADDRESS_FLAG"]){
+			echo "あり\n";
+		}else{
+			echo "なし\n";
+		}
+		echo "</td>";
+		echo "<td>" . $row["MAIL_ADDRESS"] . "</td>\n";
+		echo "<td>" . $row["PRIORITY_ADDRESS"] . "</td>\n";
+		echo "<td>" . $row["REGISTER_DATE"] . "</td>\n";
+		echo "<td>" . $row["BIRTH"] . "</td>\n";
+		echo "<td>";
+		if($row["UNDERAGE_FLAG"]){
+			echo "未成年\n";
+		}else{
+			echo "未成年でない\n";
+		}
+		echo "</td>";
+		echo "<td>" . $row["PRICE"] . "</td>\n";
+		echo "<td>";
+		if($row["ACRYLIC_FLAG"]){
+			echo "あり\n";
+		}else{
+			echo "なし\n";
+		}
+		echo "</td>";
+		echo "<td>";
+		if($row["DISPLAY_FLAG"]){
+			echo "あり\n";
+		}else{
+			echo "なし\n";
+		}
+		echo "</td>";
+		echo "<td>" . $row["DISPLAY_NUM"] . "</td>\n";
+		echo "<td>";
+		if($row["TRADE_FLAG"]){
+			echo "あり\n";
+		}else{
+			echo "なし\n";
+		}
+		echo "</td>";
+		echo "<td>" . $row["TRADE_NUM"] . "</td>\n";
+		echo "<td>";
+		if($row["PRISE_FLAG"]){
+			echo "あり\n";
+		}else{
+			echo "なし\n";
+		}
+		echo "</td>";
+		echo "<td>" . $row["PRISE_NUM"] . "</td>\n";
+		echo "<td>";
+		if($row["ALCHOL_FLAG"]){
+			echo "あり\n";
+		}else{
+			echo "なし\n";
+		}
+		echo "</td>";
+		echo "<td>" . $row["ALCHOL_NUM"] . "</td>\n";
+		echo "<td>" . $row["LOVE_FRIENDS"] . "</td>\n";
+		echo "<td>";
+		if($row["COSTUME_FLAG"]){
+			echo "あり\n";
+		}else{
+			echo "なし\n";
+		}
+		echo "</td>";
+		echo "<td>" . $row["COMMENT"] . "</td>\n";
+
+		echo "<td>" . $row["ADMIN_FLAG"] . "</td>\n";
+		echo "<td>" . $row["STATUS"] . "</td>\n";
+
+	}
+
+
+	?>
+
+</body>

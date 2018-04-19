@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<?php
+	if(empty($_GET["QA"])){
+		//リダイレクト処理
+	}else{
+		$QA_url = urldecode($_GET["QA"]);
+		$QA = json_decode($QA_url,true);
+	}
+?>
+<head>
+<meta charset="UTF-8">
+<title>サーバルケーキパーティ</title>
+<meta http-equiv="content-style-type" content="text/css">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="stylesheet" href="../css/base.css" type="text/css" media="screen">
+<link rel="stylesheet" href="../css/table_conf.css" type="text/css" media="screen">
+<script type="text/javascript" src="../javascript/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="../javascript/QA_confirm.js"></script>
+</head>
+<body>
+<h1>サーバルケーキパーティ！登録確認ページ</h1>
+<img src = "./img/top.jpg">
+<div id="main">
+	<div id = "confirm">
+		<p>
+			以下の内容でよろしければ、送信ボタンを押してください。
+		</p>
+	</div>
+
+	<div id = "main_confirm">
+	<form><table>
+		<tr>
+			<td>
+				<p>お名前</p>
+			</td>
+			<td>
+				<p>
+					<?php
+						echo $QA["name"];
+					?>
+				</p>
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				<p>タイトル</p>
+			</td>
+			<td>
+				<p>
+					<?php
+						echo $QA["title"];
+					?>
+				</p>
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				<p>メールアドレス</p>
+			</td>
+			<td>
+				<p>
+					<?php
+						echo $QA["address"];
+					?>
+				</p>
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				<p>お問合せ内容</p>
+			</td>
+			<td>
+				<p>
+					<?php
+							echo $QA["content"];
+
+					?>
+				</p>
+			</td>
+		</tr>
+
+		</table></form>
+
+		<div id="button_set">
+			<button id="sent" value="sent">送信</button>
+			<button id="back" value="back">修正</button>
+		</div>
+
+	</div>
+
+
+
+	<div id = "link">
+		<a href="./index.html">トップへ戻る</a>
+	</div>
+</div>
+
+<div id ="footer">
+	<p>
+		サーバルケーキパーティは、けものフレンズの非公式イベントです。<br>
+		公式けものフレンズプロジェクトとは一切関係ございません。<br>
+		ご質問などは<a href="./QA.html">こちら</a>からお願いいたします。
+	</p>
+</div>
+
+</body>

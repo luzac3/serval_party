@@ -1,0 +1,21 @@
+table{
+	width:95%;
+}
+
+.long_form{
+	width:75%;
+}
+
+textarea{
+	width:80%;
+	height:150px;
+}
+
+#text_area{
+	height:100%;
+}
+
+.left_pane{
+	width:30%;
+	vertical-align: middle;
+}
